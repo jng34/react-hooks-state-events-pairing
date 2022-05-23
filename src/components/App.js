@@ -3,10 +3,12 @@ import Header from "./Header";
 import Buttons from "./Buttons";
 import video from "../data/video.js";
 
+const { id, title, embedUrl, createdAt, views, upvotes, downvotes, comments } = video;
+
 function App() {
-  const [commentState, setCommentState] = useState(video.comments);
-  const [likeState, setLikeState] = useState(video.upvotes);
-  const [dislikeState, setDislikeState] = useState(video.downvotes);
+  const [commentState, setCommentState] = useState(comments);
+  const [likeState, setLikeState] = useState(upvotes);
+  const [dislikeState, setDislikeState] = useState(downvotes);
   // const [searchState, setSearchState] = useState(""); DON'T NEED STATE IF NOT A FORM?
 
   function handleLikes() {
@@ -18,7 +20,7 @@ function App() {
   }
 
   function handleComments(toggleState) {
-    toggleState ? setCommentState([]) : setCommentState(video.comments)
+    toggleState ? setCommentState([]) : setCommentState(comments)
   }
 
   function handleSearch(event) {
@@ -37,7 +39,7 @@ function App() {
   function handleRemove(event) {
     console.log(event.target.id);
     const id = event.target.id;
-    const updatedComments = video.comments.filter((comment) => {
+    const updatedComments = comments.filter((comment) => {
       if (comment.id === parseInt(id)) {
         return false;
       }
@@ -52,22 +54,16 @@ function App() {
       <iframe
         width="919"
         height="525"
-        src={video.embedUrl}
+        src={embedUrl}
         frameBorder="0"
         allowFullScreen
         title={"Thinking in React"}
       />
-      <Header title={video.title} views={video.views} date={video.createdAt}  />
+      <Header title={title} views={views} date={createdAt}  />
       <Buttons upVotes={likeState} downVotes={dislikeState} comments={commentState} onLikeClick={handleLikes} onDislikeClick={handleDislikes} displayComments={handleComments} searchInput={handleSearch} removeComment={handleRemove}/>
     </div>
   );
 }
-
-
-//Header child
-
-//Buttons child
-    //
 
 
 export default App;
